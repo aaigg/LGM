@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LGM — Profils Discord</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <header class="header navbar">
+    <div class="container inner">
+      <a class="brand" href="index.html" aria-label="Accueil LGM">
+        <span class="brand-badge"></span>
+        <span class="brand-name">LGM • Communauté</span>
+      </a>
+      <nav class="nav-links">
+        <a href="index.html">Accueil</a>
+        <a class="active" href="lgm.html">LGM Member</a>
+        <a href="videos.html">Vidéos</a>
+        <a href="memorable.html">Memorable</a>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-weight:700;opacity:.9">VOL</span>
+          <input id="musicVol" type="range" min="0" max="1" step="0.01" value="0.8" style="width:110px">
+          <button id="musicBtn" class="btn btn-ghost" type="button">Activer la musique</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <h2>LGM Member</h2>
+      <div id="membersGrid" class="cards members-grid"></div>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container inner">
+      © <span id="year"></span> LGM 
+    </div>
+  </footer>
+
+  <!-- Lecteur audio simple (caché) -->
+  <audio id="siteAudio" src="./sasa.mp3" preload="auto"></audio>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Musique avec persistance (play/vol/position)
+    (function(){
+      const storeKey = 'lgm_music_v1';
+      const btn = document.getElementById('musicBtn');
+      const vol = document.getElementById('musicVol');
+      const audio = document.getElementById('siteAudio');
+      if(!audio) return;
+
+      let state = { playing:false, volume:0.8, time:0 };
+      try{ const s = localStorage.getItem(storeKey); if(s){ state = Object.assign(state, JSON.parse(s)); } }catch(e){}
+      function save(){ try{ localStorage.setItem(storeKey, JSON.stringify(state)); }catch(e){} }
+
+      audio.volume = state.volume;
+      if(vol) vol.value = String(state.volume);
+
+      audio.addEventListener('loadedmetadata', ()=>{
+        if(state.time && state.time < audio.duration){ audio.currentTime = state.time; }
+      });
+      audio.addEventListener('timeupdate', ()=>{ state.time = audio.currentTime; save(); });
+
+      if(btn){
+        btn.textContent = state.playing ? 'Pause musique' : 'Activer la musique';
+        btn.addEventListener('click', async ()=>{
+          try{
+            if(audio.paused){ await audio.play(); state.playing = true; btn.textContent = 'Pause musique'; }
+            else { audio.pause(); state.playing = false; btn.textContent = 'Activer la musique'; }
+            save();
+          }catch(e){ console.warn('Lecture audio bloquée:', e); }
+        });
+      }
+
+      if(vol){
+        vol.addEventListener('input', ()=>{
+          const v = Math.max(0, Math.min(1, parseFloat(vol.value)||0));
+          audio.volume = v; state.volume = v; save();
+        });
+      }
+
+      if(state.playing){ audio.play().catch(()=>{}); }
+    })();
+
+    // Membres (noms imaginés + descriptions fictives)
+    const MEMBERS = [
+      { name: 'LGM Adam Grinder', img: './assets/adam.png', desc: "je suis un gros porc qui grind dans la commu.", page: './members/adam.html' },
+      { name: 'LGM Boubou Grinder', img: './assets/bb.png', desc: 'Je suis le plus gros de la lgm je grind aussi', page: './members/bb.html' },
+      { name: 'LGM Cvml #legende LGM', img: './assets/cv.png', desc: 'Je suis un gros suceur de nixxo', page: './members/cv.html' },
+      { name: 'LGM Cxo #bannit a chier', img: './assets/cx.png', desc: 'vend ta key tu pue la merde', page: './members/cx.html' },
+      { name: 'LGM kenze #og ', img: './assets/folow.png', desc: 'og et co fondateur', page: './members/folow.html' },
+      { name: 'LGM Sarcatz #Lead LGM ', img: './assets/image.png', desc: 'monteur graphiste et dev de la lgm.', page: './members/image.html' },
+      { name: 'LGM laleos #commando LGM ', img: './assets/lale.png', desc: 'pro en incruste et en tech', page: './members/lale.html' },
+      { name: 'LGM Marvin #grinder et gros chameaux', img: './assets/mrv.png', desc: 'on et la cette années', page: './members/mrv.html' },
+      { name: 'LGM SLZ #balance (vrai lead LGM)', img: './assets/rois.png', desc: 'reel fondateur et grosse balance #13 projet offline tous flop ', page: './members/rois.html' },
+      { name: 'LGM Sarcatz avant le retake', img: './assets/sar.png', desc: 'Revolutionnaire de la nouvelle LGM.', page: './members/sar.html' },
+      { name: 'LGM Nevehd #grosseChekem', img: './assets/xw.png', desc: 'doxeur a chié et balances', page: './members/xw.html' },
+      { name: 'LGM ZK #Lead lite', img: './assets/zkk.png', desc: 'projet lite qui a duré 1h #BE', page: './members/zkk.html' },
+      { name: 'LGM Zouzou #cache bien sont jeux', img: './assets/zouzou.png', desc: 'config legit a vendre', page: './members/zouzou.html' },
+      { name: 'LGM Sayless #Lead op', img: './assets/sayless.png', desc: 'commando anti FL/lite', page: './members/sayless.html' }
+      
+    ];
+
+    const grid = document.getElementById('membersGrid');
+
+    grid.innerHTML = MEMBERS.map((m, i) => `
+      <a class="card member-card" data-i="${i}" href="${m.page}" style="text-decoration:none;color:inherit">
+        <img src="${m.img}" alt="${m.name}"/>
+        <div>
+          <h3 style="margin:0 0 6px 0">${m.name}</h3>
+          <p style="margin:0;opacity:.85;">${m.desc}</p>
+        </div>
+      </a>
+    `).join('');
+  </script>
+</body>
+</html>

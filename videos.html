@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vidéos — LGM</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <header class="header navbar">
+    <div class="container inner">
+      <a class="brand" href="index.html" aria-label="Accueil LGM">
+        <span class="brand-badge"></span>
+        <span class="brand-name">LGM • Communauté</span>
+      </a>
+      <nav class="nav-links">
+        <a href="index.html">Accueil</a>
+        <a href="lgm.html">LGM Member</a>
+        <a class="active" href="videos.html">Vidéos</a>
+        <a href="memorable.html">Memorable</a>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-weight:700;opacity:.9">VOL</span>
+          <input id="musicVol" type="range" min="0" max="1" step="0.01" value="0.8" style="width:110px">
+          <button id="musicBtn" class="btn btn-ghost" type="button">Activer la musique</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <h2>Vidéos de la communauté</h2>
+      <p>Découvrez nos dernières publications YouTube.</p>
+
+      <div id="featured" class="video" style="margin: 16px 0 28px;border-radius:14px;overflow:hidden"></div>
+
+      <div class="video-grid"></div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container inner">
+      © <span id="year"></span> LGM 
+    </div>
+  </footer>
+
+  <!-- Lecteur audio simple (caché) -->
+  <audio id="siteAudio" src="./sasa.mp3" preload="auto"></audio>
+
+  <script src="./script.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Musique avec persistance (play/vol/position)
+    (function(){
+      const storeKey = 'lgm_music_v1';
+      const btn = document.getElementById('musicBtn');
+      const vol = document.getElementById('musicVol');
+      const audio = document.getElementById('siteAudio');
+      if(!audio) return;
+
+      let state = { playing:false, volume:0.8, time:0 };
+      try{ const s = localStorage.getItem(storeKey); if(s){ state = Object.assign(state, JSON.parse(s)); } }catch(e){}
+      function save(){ try{ localStorage.setItem(storeKey, JSON.stringify(state)); }catch(e){} }
+
+      audio.volume = state.volume;
+      if(vol) vol.value = String(state.volume);
+
+      audio.addEventListener('loadedmetadata', ()=>{
+        if(state.time && state.time < audio.duration){ audio.currentTime = state.time; }
+      });
+      audio.addEventListener('timeupdate', ()=>{ state.time = audio.currentTime; save(); });
+
+      if(btn){
+        btn.textContent = state.playing ? 'Pause musique' : 'Activer la musique';
+        btn.addEventListener('click', async ()=>{
+          try{
+            if(audio.paused){ await audio.play(); state.playing = true; btn.textContent = 'Pause musique'; }
+            else { audio.pause(); state.playing = false; btn.textContent = 'Activer la musique'; }
+            save();
+          }catch(e){ console.warn('Lecture audio bloquée:', e); }
+        });
+      }
+
+      if(vol){
+        vol.addEventListener('input', ()=>{
+          const v = Math.max(0, Math.min(1, parseFloat(vol.value)||0));
+          audio.volume = v; state.volume = v; save();
+        });
+      }
+
+      if(state.playing){ audio.play().catch(()=>{}); }
+    })();
+  </script>
+</body>
+</html>

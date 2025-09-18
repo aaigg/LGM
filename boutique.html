@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Boutique — LGM</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https://i.ytimg.com data:; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; frame-src https://www.youtube.com; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <header class="header navbar">
+    <div class="container inner">
+      <a class="brand" href="index.html" aria-label="Accueil LGM">
+        <span class="brand-badge"></span>
+        <span class="brand-name">LGM • Communauté</span>
+      </a>
+      <nav class="nav-links">
+        <a href="index.html">Accueil</a>
+        <a href="lgm.html">LGM Member</a>
+        <a href="videos.html">Vidéos</a>
+        <a href="discord.html">Discord</a>
+        <a href="tutos.html">Tutos</a>
+        <a class="active" href="boutique.html">Boutique</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <h2>Boutique — Techniques LGM</h2>
+      <p>Achetez des techniques et packs premium LGM. Paiement sécurisé conseillé via un prestataire (Stripe/PayPal).</p>
+
+      <div class="cards" id="shopGrid" aria-label="Catégories Boutique"></div>
+
+      <section id="lgm-software" class="section" style="padding-top:32px">
+        <h2 style="color:#ffe082;margin-bottom:10px">Catégorie Vente — LGM Software FiveM</h2>
+        <p style="color:#c9c9c9;margin-bottom:18px">Suite logicielle dédiée à FiveM pour la communauté LGM. Présentation fictive et esthétique à but démonstratif.</p>
+        <div class="cards" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))">
+          <article class="card">
+            <h3>Présentation</h3>
+            <p>"LGM Software FiveM" optimise votre expérience RP: outils d’administration, utilitaires de serveur, diagnostics, et plus.</p>
+          </article>
+          <article class="card">
+            <h3>Fonctionnalités clés</h3>
+            <ul style="margin:0;padding-left:18px;color:#c9c9c9">
+              <li>Gestion d’inventaire in‑game</li>
+              <li>Panel d’admin web sécurisé</li>
+              <li>Logs avancés et anti‑abus basique</li>
+              <li>Compatibilité ESX/QBCore (démo)</li>
+              <li>Mises à jour fictives mensuelles</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3>Tarif</h3>
+            <p style="margin:10px 0; color:#ffe082; font-weight:700">29,90€ / licence</p>
+            <p><a class="btn btn-primary" href="#">Acheter</a></p>
+          </article>
+          <article class="card">
+            <h3>FAQ</h3>
+            <p>Produit fictif. Prévoir une page de paiement réelle (Stripe/PayPal) et une clé de licence si vous le commercialisez.</p>
+          </article>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container inner">
+      © <span id="year"></span> LGM 
+    </div>
+  </footer>
+
+  <script src="./boutique.js" defer></script>
+</body>
+</html>

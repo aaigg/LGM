@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Présentation — LGM</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <header class="header navbar">
+    <div class="container inner">
+      <a class="brand" href="index.html" aria-label="Accueil LGM">
+        <span class="brand-badge"></span>
+        <span class="brand-name">LGM • Communauté</span>
+      </a>
+      <nav class="nav-links">
+        <a href="index.html">Accueil</a>
+        <a class="active" href="presentation.html">Présentation</a>
+        <a href="videos.html">Vidéos</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <h2>Qui sommes-nous ?</h2>
+        <p>
+          LGM est une communauté rassemblée autour du partage, de la créativité et de l’entraide. Que vous soyez
+          débutant ou expérimenté, vous trouverez ici un endroit où progresser, rencontrer de nouvelles personnes et
+          contribuer à des projets communs.
+        </p>
+        <div class="cards" style="margin-top:16px">
+          <article class="card">
+            <h3>Nos valeurs</h3>
+            <p>Respect, bienveillance, inclusion, progression et plaisir d’apprendre ensemble.</p>
+          </article>
+          <article class="card">
+            <h3>Nos activités</h3>
+            <p>Échanges, lives, projets collaboratifs, événements, tutoriels, et plus encore.</p>
+          </article>
+          <article class="card">
+            <h3>Rejoindre</h3>
+            <p>Suivez nos vidéos et lives, participez sur nos espaces communautaires et présentez-vous !</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container inner">
+      © <span id="year"></span> LGM 
+    </div>
+  </footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

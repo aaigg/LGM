@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CV — LGM Member</title>
+  <link rel="stylesheet" href="../style.css" />
+  <style>.member-page{display:grid;grid-template-columns:260px 1fr;gap:24px;align-items:start}.member-avatar{width:100%;border-radius:16px;border:1px solid rgba(255,255,255,.08);background:#0f0f10}.member-meta h1{margin:.2rem 0 8px 0}.member-meta p{color:var(--muted)}</style>
+</head>
+<body>
+  <header class="header navbar">
+    <div class="container inner">
+      <a class="brand" href="../index.html" aria-label="Accueil LGM">
+        <span class="brand-badge"></span>
+        <span class="brand-name">LGM • Communauté</span>
+      </a>
+      <nav class="nav-links">
+        <a href="../index.html">Accueil</a>
+        <a href="../lgm.html">LGM Member</a>
+        <a href="../videos.html">Vidéos</a>
+      </nav>
+    </div>
+  </header>
+  <main class="section">
+    <div class="container member-page">
+      <img src="../assets/cv.png" alt="CV" class="member-avatar"/>
+      <div class="member-meta">
+        <h1>cvml</h1>
+      </div>
+    </div>
+  </main>
+  <footer class="footer"><div class="container inner">© <span id="year"></span> LGM — Member.</div></footer>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
